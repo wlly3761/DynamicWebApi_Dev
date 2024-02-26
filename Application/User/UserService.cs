@@ -57,18 +57,18 @@ namespace Application.User
                 new Claim(ClaimTypes.Role, "client")
             };
                 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SystemConfig.JwtSetting.SecretKey));
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                var jwtSecurityToken = new JwtSecurityToken(
-                    issuer: SystemConfig.JwtSetting.Issuer,
-                    audience: SystemConfig.JwtSetting.Audience,
-                    claims: claims,
-                    expires: expiredTime,
-                    signingCredentials: creds);
-                string token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                //var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SystemConfig.JwtSetting.SecretKey));
+                //var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+                //var jwtSecurityToken = new JwtSecurityToken(
+                //    //issuer: SystemConfig.JwtSetting.Issuer,
+                //    //audience: SystemConfig.JwtSetting.Audiencke,
+                //    claims: claims,
+                //    expires: expiredTime,
+                //    signingCredentials: creds);
+                //string token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
                 var tokenInfo = new
                 {
-                    Token = token,
+                    //Token = token,
                     Expired = expiredTime
                 };
                 return tokenInfo;

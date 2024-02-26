@@ -1,13 +1,14 @@
 ﻿namespace ApplicationCommon
 {
-    public  class SystemConfig
+    public class SystemConfig
     {
+        public const string ConfigName = "SystemConfig";
         /// <summary>
         /// 数据库连接字符串
         /// </summary>
-        public static  string DBConnection { get; set; }
-        public static string DBConnection2 { get; set; }
-        public static JwtSetting JwtSetting { get; set; }
+        public  string DBConnection { get;  set; }
+        public  string DBConnection2 { get;  set; }
+        public  JwtSetting JwtSetting { get;  set; }
     }
     public class JwtSetting
     {
@@ -25,5 +26,6 @@
         /// 加密字符串
         /// </summary>
         public string SecretKey { get; set; }
+
     }
 }

@@ -37,10 +37,10 @@ namespace DynamicWebApi.BaseConfigSerivce.SqlSugar
             });
             services.ConfigurationSugar(db =>
             {
-                db.GetConnection("1").Aop.OnLogExecuting = (sql, p) =>
-                {
-                    Console.WriteLine(1+sql);
-                };
+                //db.GetConnection("1").Aop.OnLogExecuting = (sql, p) =>
+                //{
+                //    Console.WriteLine(1+sql);
+                //};
             });
         }
     }

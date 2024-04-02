@@ -1,8 +1,12 @@
 ﻿using ApplicationCommon;
 using Microsoft.AspNetCore.Mvc;
+using Repository;
+using Repository.BaseModel;
 using Repository.Entity;
+using Repository.QueryModel;
 using SqlSugar;
 using SqlSugar.IOC;
+using System.Linq.Expressions;
 
 namespace Application.Certificate
 {
@@ -11,10 +15,12 @@ namespace Application.Certificate
     public class Certificate : ICertificate
     {
         private readonly ISqlSugarClient sugarClient1;
-        private readonly ISqlSugarClient sugarClient2;
+        private readonly BaseRepository<CertificateModel> repository;
+
         public Certificate(ISqlSugarClient sugarClient)
         {
             sugarClient1=sugarClient;
+            repository=new BaseRepository<CertificateModel>(sugarClient);
 
         }
         public void AddEntity(CertificateModel model)
@@ -25,10 +31,17 @@ namespace Application.Certificate
         /// 获取所有证书信息
         /// </summary>
         /// <returns></returns>
-        public List<CertificateModel> GetAll()
+        public  async Task<List<CertificateModel>> GetAll()
         {
-            return sugarClient1.Queryable<CertificateModel>().ToList();
+            return await repository.QueryAll();
+
         }
+
+        public async Task<ReturnModel<CertificateModel>> GetPageList(CertificateQueryModel queryModel)
+        {
+            return await repository.QueryPage(x=>string.IsNullOrWhiteSpace(queryModel.CertificateNumber) || x.CertificateName.Contains(queryModel.CertificateNumber));
+        }
+
         /// <summary>
         /// 获取单位信息
         /// </summary>

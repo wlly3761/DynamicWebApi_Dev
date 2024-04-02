@@ -1,4 +1,5 @@
 ﻿using ApplicationCommon;
+using SqlSugar;
 using SqlSugar.IOC;
 
 namespace DynamicWebApi.BaseConfigSerivce.SqlSugar
@@ -12,26 +13,34 @@ namespace DynamicWebApi.BaseConfigSerivce.SqlSugar
         public static void AddSqlsugarSetup(this IServiceCollection services,IConfiguration configuration)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
-            services.AddSqlSugar(new IocConfig
+            services.AddScoped<ISqlSugarClient>(o =>
             {
-                ConfigId="1",
-                DbType=IocDbType.SqlServer,//必填, 数据库类型
-                ConnectionString=configuration.GetValue<string>("DBConnection"),//必填, 数据库连接字符串
-                IsAutoCloseConnection = true//默认false, 是否自动关闭数据库连接, 设置为true无需使用using或者Close操作
+                var client = new SqlSugarClient(new ConnectionConfig()
+                {
+                    ConnectionString = configuration.GetValue<string>("DBConnection"),
+                    DbType = DbType.SqlServer,
+                    IsAutoCloseConnection = true,
+                    ConfigId = "1"
+                });
+                return client;
             });
-            services.AddSqlSugar(new IocConfig()
+            services.AddScoped<ISqlSugarClient>(o =>
             {
-                ConfigId="2",
-                ConnectionString = configuration.GetValue<string>("DBConnection2"),
-                DbType = IocDbType.SqlServer,
-                IsAutoCloseConnection = true
+                var client = new SqlSugarClient(new ConnectionConfig()
+                {
+                    ConnectionString = configuration.GetValue<string>("DBConnection2"),
+                    DbType = DbType.SqlServer,
+                    IsAutoCloseConnection = true,
+                    ConfigId = "2"
+                });
+                return client;
             });
             services.ConfigurationSugar(db =>
             {
-                //db.GetConnection("1").Aop.OnLogExecuting = (sql, p) =>
-                //{
-                //    Console.WriteLine(1+sql);
-                //};
+                db.GetConnection("1").Aop.OnLogExecuting = (sql, p) =>
+                {
+                    Console.WriteLine(1+sql);
+                };
             });
         }
     }

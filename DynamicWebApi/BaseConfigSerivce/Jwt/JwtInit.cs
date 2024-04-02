@@ -14,7 +14,7 @@ namespace DynamicWebApi.BaseConfigSerivce.Jwt
     {
         public static void JwtRegesiterService(this IServiceCollection services, IConfiguration systemConfig)
         {
-            string ss=systemConfig.GetValue<string>("JwtSetting:Audience");
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(p =>
     {

@@ -9,5 +9,7 @@ namespace Application.Options
     internal interface Ioptions
     {
         object GetConfigure();
+
+        string GetConfigValue(string key);
     }
 }

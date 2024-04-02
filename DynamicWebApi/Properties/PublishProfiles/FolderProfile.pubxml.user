@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>D:\我的学习\GitDynamicWebAPI\DynamicWebApi_Dev\DynamicWebApi\bin\Release\net6.0\publish\</_PublishTargetUrl>
+    <History>False|2024-03-13T06:46:41.4985322Z;False|2024-03-13T14:42:17.8756572+08:00;False|2024-03-13T14:39:37.4949533+08:00;False|2024-03-13T14:38:58.7978796+08:00;False|2024-03-13T14:37:12.4222266+08:00;False|2024-03-13T14:36:32.7270630+08:00;True|2024-03-13T14:08:16.3493991+08:00;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>

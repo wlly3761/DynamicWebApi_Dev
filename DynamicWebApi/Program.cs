@@ -1,5 +1,3 @@
-using ApplicationCommon;
-using ApplicationCommon.Model;
 using DynamicWebApi.BaseConfigSerivce;
 using DynamicWebApi.BaseConfigSerivce.DynamicAPi;
 using DynamicWebApi.BaseConfigSerivce.Filter;
@@ -9,11 +7,11 @@ using DynamicWebApi.BaseConfigSerivce.Swagger;
 
 var builder = WebApplication.CreateBuilder(args);
 //使用Option绑定配置项
-builder.Services.Configure<SystemConfig>(
-    builder.Configuration.GetSection(SystemConfig.ConfigName));
-IConfigurationSection configurationSection = builder.Configuration.GetSection(SystemConfig.ConfigName);
+//builder.Services.Configure<SystemConfig>(
+//    builder.Configuration.GetSection(SystemConfig.ConfigName));
+builder.Configuration.AddJsonFile("appsettings.json",optional:false,reloadOnChange:true);
 ////注册JWT验证服务
-builder.Services.JwtRegesiterService(configurationSection);
+builder.Services.JwtRegesiterService(builder.Configuration);
 //加载动态API
 builder.Services.AddControllers().AddDynamicWebApi();
 //加载swaggerDoc文档修饰
@@ -21,9 +19,8 @@ builder.Services.AddSwaggerGenExtend();
 //自动注入服务
 builder.Services.AutoRegistryService();
 //注入SqlSugar服务
-builder.Services.AddSqlsugarSetup(configurationSection);
-
-
+builder.Services.AddSqlsugarSetup(builder.Configuration);
+ 
 //拦截所有API请求
 builder.Services.AddMvc(options =>
 {

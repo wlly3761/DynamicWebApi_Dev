@@ -14,7 +14,6 @@ namespace Application.User
     {
         private static string _userName;
         public string UserName { get => _userName; }
-
         public UserService()
         {
             _userName="张三";

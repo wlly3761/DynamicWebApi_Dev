@@ -10,27 +10,32 @@ namespace Application.Certificate
     [ServiceRegistry(ServicelLifeCycle = "Scoped")]
     public class Certificate : ICertificate
     {
-        private readonly SqlSugarProvider sugarScope1;
-        private readonly SqlSugarProvider sugarScope2;
-
-        public Certificate()
+        private readonly ISqlSugarClient sugarClient1;
+        private readonly ISqlSugarClient sugarClient2;
+        public Certificate(ISqlSugarClient sugarClient)
         {
-            sugarScope1=DbScoped.SugarScope.GetConnection("1");
-            sugarScope2=DbScoped.SugarScope.GetConnection("2");
+            sugarClient1=sugarClient;
 
         }
         public void AddEntity(CertificateModel model)
         {
-            sugarScope1.Insertable(model).ExecuteCommand();
+            sugarClient1.Insertable(model).ExecuteCommand();
         }
+        /// <summary>
+        /// 获取所有证书信息
+        /// </summary>
+        /// <returns></returns>
         public List<CertificateModel> GetAll()
         {
-            return sugarScope1.Queryable<CertificateModel>().ToList();
+            return sugarClient1.Queryable<CertificateModel>().ToList();
         }
-
+        /// <summary>
+        /// 获取单位信息
+        /// </summary>
+        /// <returns></returns>
         public List<UnitModel> GetUnits()
         {
-           return sugarScope2.Queryable<UnitModel>().ToList();
+           return sugarClient1.AsTenant().GetConnection("2").Queryable<UnitModel>().ToList();
         }
     }
 }
